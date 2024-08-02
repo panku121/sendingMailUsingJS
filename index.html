@@ -3,56 +3,14 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style>
-		body {
-			font-family: Arial, Helvetica, sans-serif;
-		}
-
-		* {
-			box-sizing: border-box;
-		}
-
-		input[type=text],
-		input[type=email],
-		select,
-		textarea {
-			width: 100%;
-			padding: 12px;
-			border: 1px solid #ccc;
-			border-radius: 4px;
-			box-sizing: border-box;
-			margin-top: 6px;
-			margin-bottom: 16px;
-			resize: vertical;
-		}
-
-		input[type=submit] {
-			background-color: #04AA6D;
-			color: white;
-			padding: 12px 20px;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-		}
-
-		input[type=submit]:hover {
-			background-color: #45a049;
-		}
-
-		.container {
-			border-radius: 5px;
-			background-color: #f2f2f2;
-			padding: 20px;
-		}
-	</style>
+	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-	<h3>Contact Form</h3>
-
 	<div class="container">
-		<form id="contact-form" onsubmit="sendMail(event)">
+		<h2>Contact Form</h2>
+		<form id="contact-form" onsubmit="sendMail(); reset(); return false;">
 			<label for="fname">First Name</label>
 			<input type="text" id="fname" name="firstname" placeholder="Your name..">
 
@@ -73,34 +31,29 @@
 
 	<script>
 
-		function sendMail(e) {
-
-			e.preventDefault()
-			const formData = new FormData(e.target);
-			console.log("🚀 -->> sendMail -->> formData:", formData.get('email'))
-			console.log("🚀 -->> sendMail -->> formData:>>>>>>>>>>>>", e)
-
-			const fname = formData.get("fname");
-			const lname = formData.get("lname");
-			const email = formData.get("email");
-			const subject = formData.get("subject");
+		function sendMail() {
+			const fname = document.getElementById("fname").value;
+			const lname = document.getElementById("lname").value;
+			const email = document.getElementById("email").value;
+			const subject = document.getElementById("subject").value;
 
 			let ebody = `
-        <b> First name: </b> ${fname}
-        <br/>
-        <b> Last name: </b> ${lname}
-        <br/>
-        <b> Email: </b> ${email}
-        <br/>
-        <b> Description: </b> ${subject}
-        `
+			<b> First name: </b> ${fname}
+			<br/>
+			<b> Last name: </b> ${lname}
+			<br/>
+			<b> Email: </b> ${email}
+			<br/>
+			<b> Description: </b> ${subject}
+			`
+			console.log("🚀 -->> sendMail -->> ebody:", ebody)
 
 			let options = {
 				SecureToken: "0d890448-6dbb-49ac-b42d-4ce6e53523d4",
 				To: "pankajbca12101@gmail.com",
 				From: "pankajbca12101@gmail.com",
 				Subject: "Enquiry",
-				Body: formData
+				Body: ebody
 			}
 
 			Email.send(options)
